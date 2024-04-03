@@ -1,23 +1,67 @@
-export const tieneMayusculas = (clave: string): boolean => {
-  let tieneMayusculas = false;
+export const tieneMayusculas = (clave: string): boolean =>
+  clave.split("").some((caracter) => caracter === caracter.toUpperCase());
 
-  if (clave.split("").some((caracter) => caracter === caracter.toUpperCase())) {
-    tieneMayusculas = true;
-  }
+export const tieneMinusculas = (clave: string): boolean =>
+  clave.split("").some((caracter) => caracter === caracter.toLowerCase());
 
-  return tieneMayusculas;
+export const tieneMayusculasYMinusculas = (clave: string): boolean =>
+  tieneMayusculas(clave) && tieneMinusculas(clave);
+
+export const tieneNumeros = (clave: string): boolean =>
+  clave.split("").some((caracter) => !isNaN(Number(caracter)));
+
+export const tieneCaracteresEspeciales = (clave: string): boolean => {
+  const caracteresEspeciales: string[] = [
+    "@",
+    "#",
+    "$",
+    "%",
+    "^",
+    "&",
+    "*",
+    "(",
+    ")",
+    "-",
+    "_",
+    "=",
+    "+",
+    "[",
+    "{",
+    "}",
+    "]",
+    "\\",
+    "|",
+    ";",
+    ":",
+    "'",
+    '"',
+    ",",
+    "<",
+    ".",
+    ">",
+    "/",
+    "?",
+    "`",
+    "~",
+  ];
+
+  return clave
+    .split("")
+    .some((caracter) => caracteresEspeciales.includes(caracter));
 };
 
-export const tieneMinusculas = (clave: string): boolean => {
-  let tieneMinusculas = false;
+export const tieneLongitudMinimaOchoCaracteres = (clave: string): boolean =>
+  clave.length >= 8;
 
-  if (clave.split("").some((caracter) => caracter === caracter.toLowerCase())) {
-    tieneMinusculas = true;
-  }
+export const tieneElNombreDeUsuario = (
+  clave: string,
+  nombreUsuario: string
+): boolean => clave.toLowerCase().includes(nombreUsuario.toLowerCase());
 
-  return tieneMinusculas;
-};
-
-export const tieneMayusculasYMinusculas = (clave: string): boolean => {
-  return tieneMayusculas(clave) && tieneMinusculas(clave);
-};
+export const tienePalabrasComunes = (
+  clave: string,
+  palabrasComunes: string[]
+): boolean =>
+  palabrasComunes.some(
+    (palabra) => palabra.toLowerCase() === clave.toLowerCase()
+  );
