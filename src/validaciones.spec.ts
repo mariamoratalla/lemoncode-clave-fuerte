@@ -21,7 +21,7 @@ describe("tieneMayusculas", () => {
 
   it("debería devolver false porque la clave no tiene mayúsculas", () => {
     // Arrange
-    const clave = "maria";
+    const clave = "maria123";
     // Act
     const resultado = tieneMayusculas(clave);
     // Assert
@@ -59,7 +59,7 @@ describe("tieneMayusculasYMinusculas", () => {
     expect(resultado).toBeTruthy();
   });
 
-  it("debería devolver un mens si la clave solo tiene minúsculas", () => {
+  it("debería devolver un false si la clave solo tiene minúsculas", () => {
     // Arrange
     const clave = "maria";
     // Act

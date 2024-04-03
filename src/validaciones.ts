@@ -1,11 +1,24 @@
 export const tieneMayusculas = (clave: string): boolean =>
-  clave.split("").some((caracter) => caracter === caracter.toUpperCase());
+  clave
+    .split("")
+    .some(
+      (caracter) =>
+        caracter !== caracter.toLowerCase() &&
+        caracter === caracter.toUpperCase()
+    );
 
 export const tieneMinusculas = (clave: string): boolean =>
-  clave.split("").some((caracter) => caracter === caracter.toLowerCase());
+  clave
+    .split("")
+    .some(
+      (caracter) =>
+        caracter !== caracter.toUpperCase() &&
+        caracter === caracter.toLowerCase()
+    );
 
-export const tieneMayusculasYMinusculas = (clave: string): boolean =>
-  tieneMayusculas(clave) && tieneMinusculas(clave);
+export const tieneMayusculasYMinusculas = (clave: string): boolean => {
+  return tieneMayusculas(clave) && tieneMinusculas(clave);
+};
 
 export const tieneNumeros = (clave: string): boolean =>
   clave.split("").some((caracter) => !isNaN(Number(caracter)));
@@ -62,6 +75,6 @@ export const tienePalabrasComunes = (
   clave: string,
   palabrasComunes: string[]
 ): boolean =>
-  palabrasComunes.some(
-    (palabra) => palabra.toLowerCase() === clave.toLowerCase()
+  palabrasComunes.some((palabra) =>
+    clave.toLowerCase().includes(palabra.toLowerCase())
   );

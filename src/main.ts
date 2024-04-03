@@ -1,3 +1,4 @@
+import { commonPasswords } from "./commonPasswords";
 import "./style.css";
 import {
   tieneCaracteresEspeciales,
@@ -18,39 +19,63 @@ export const validarClave = (
   clave: string,
   commonPasswords: string[]
 ): ValidacionClave => {
-  let validar: ValidacionClave = {
-    esValida: true,
-  };
+  if (!nombreUsuario || !clave) {
+    throw new Error("Introduce clave y nombre de usuario");
+  }
 
-  if (!tieneMayusculasYMinusculas(clave)) {
-    (validar.esValida = false),
-      (validar.error = "La clave debe de tener mayúsculas y minúsculas");
+  if (tieneMayusculasYMinusculas(clave) === false) {
+    return {
+      esValida: false,
+      error: "La clave debe de tener mayúsculas y minúsculas",
+    };
   }
 
   if (!tieneNumeros(clave)) {
-    (validar.esValida = false),
-      (validar.error = "La clave debe de tener números");
+    return {
+      esValida: false,
+      error: "La clave debe de tener números",
+    };
   }
 
   if (!tieneCaracteresEspeciales(clave)) {
-    (validar.esValida = false),
-      (validar.error = "La clave debe de tener caracteres especiales");
+    return {
+      esValida: false,
+      error: "La clave debe de tener caracteres especiales",
+    };
   }
 
   if (!tieneLongitudMinimaOchoCaracteres(clave)) {
-    (validar.esValida = false),
-      (validar.error =
-        "La clave debe de tener una longitud mínima de 8 caracteres");
+    return {
+      esValida: false,
+      error: "La clave debe de tener una longitud mínima de 8 caracteres",
+    };
   }
 
   if (tieneElNombreDeUsuario(clave, nombreUsuario)) {
-    (validar.esValida = false),
-      (validar.error = "La clave no debe tener el nombre del usuario");
+    return {
+      esValida: false,
+      error: "La clave no debe tener el nombre del usuario",
+    };
   }
 
   if (tienePalabrasComunes(clave, commonPasswords)) {
-    (validar.esValida = false),
-      (validar.error = "La clave no debe de contener palabras comunes");
+    return {
+      esValida: false,
+      error: "La clave no debe de contener palabras comunes",
+    };
   }
-  return validar;
+  return {
+    esValida: true,
+  };
 };
+
+console.log(validarClave("nombreUsuario", "Usuario123*", commonPasswords));
+console.log(validarClave("nombreUsuario", "usuario123*", commonPasswords));
+console.log(validarClave("nombreUsuario", "Usuario*", commonPasswords));
+console.log(validarClave("nombreUsuario", "Usuario123", commonPasswords));
+console.log(
+  validarClave("nombreUsuario", "nombreUsuario123*", commonPasswords)
+);
+console.log(validarClave("nombreUsuario", "Password123*", commonPasswords));
+console.log(validarClave("", "Password123*", commonPasswords));
+console.log(validarClave("nombreUsuario", "", commonPasswords));
